@@ -764,27 +764,27 @@ textarea:focus {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  min-height: 68px;
-  padding: 4px 0;
+  min-height: 72px;
+  padding: 8px 0;
 }
 
 .site-header .site-brand {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  width: 340px !important;
-  max-width: 340px !important;
-  height: 58px !important;
-  max-height: 58px !important;
-  overflow: hidden !important;
-  flex: 0 0 340px !important;
+  width: 360px !important;
+  max-width: 360px !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  flex: 0 0 360px !important;
   text-decoration: none !important;
 }
 
 .site-header .site-logo {
   display: block !important;
-  width: 340px !important;
-  max-width: 340px !important;
+  width: 360px !important;
+  max-width: 360px !important;
   height: auto !important;
   max-height: none !important;
   object-fit: contain !important;
@@ -830,18 +830,19 @@ textarea:focus {
   }
 
   .site-header .site-brand {
-    width: 150px !important;
-    max-width: 150px !important;
-    height: 40px !important;
-    max-height: 40px !important;
-    flex: 0 0 150px !important;
+    width: 160px !important;
+    max-width: 160px !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    flex: 0 0 160px !important;
   }
 
   .site-header .site-logo {
-    width: 150px !important;
-    max-width: 150px !important;
+    width: 160px !important;
+    max-width: 160px !important;
     height: auto !important;
-    max-height: 50px !important;
+    max-height: none !important;
   }
 
   .site-header .site-nav {
