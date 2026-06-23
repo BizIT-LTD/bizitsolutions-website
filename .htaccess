@@ -8,6 +8,15 @@ RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\.bizitsolutions\.com\.au$ [NC]
 RewriteRule ^ https://bizitsolutions.com.au%{REQUEST_URI} [R=301,L]
 
+# Retired service pages now resolve to the current service offering anchors.
+RewriteRule ^business-it-support(?:\.html)?/?$ /services#it-managed-services [R=301,L,NE]
+RewriteRule ^microsoft-365(?:\.html)?/?$ /services#it-managed-services [R=301,L,NE]
+RewriteRule ^microsoft-azure(?:\.html)?/?$ /services#it-consultancy [R=301,L,NE]
+RewriteRule ^managed-services(?:\.html)?/?$ /services#it-managed-services [R=301,L,NE]
+RewriteRule ^it-security(?:\.html)?/?$ /services#security-operations-center [R=301,L,NE]
+RewriteRule ^web-design-services(?:\.html)?/?$ /services#it-consultancy [R=301,L,NE]
+RewriteRule ^seo-google-ads(?:\.html)?/?$ /services#it-consultancy [R=301,L,NE]
+
 # Serve extensionless clean URLs from matching .html files.
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
