@@ -426,6 +426,36 @@ p {
   background: var(--blue-dark);
 }
 
+.related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.related-links a,
+.text-link {
+  color: var(--blue-dark);
+  font-weight: 800;
+}
+
+.faq-list {
+  display: grid;
+  gap: 16px;
+}
+
+.faq-item {
+  padding: 22px;
+  background: var(--white);
+  border: 1px solid var(--grey-border);
+  border-radius: 8px;
+}
+
+.faq-item p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
 .split {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.86fr);
