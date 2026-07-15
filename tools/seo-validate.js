@@ -7,6 +7,20 @@ const ROOT = path.resolve(__dirname, "..");
 const SITE = "https://bizitsolutions.com.au";
 const SKIP_DIRS = new Set([".git", ".agents", "node_modules"]);
 const REQUIRED_FAVICON = "/assets/images/bizitFavicon400x400.png";
+const SERVICE_PAGES = new Set([
+  "managed-it-services-sydney.html",
+  "it-support-sydney.html",
+  "small-business-it-support-sydney.html",
+  "microsoft-365-support-sydney.html",
+  "cyber-security-services-sydney.html",
+  "essential-eight-consulting-sydney.html",
+  "it-consulting-sydney.html",
+  "virtual-it-manager-sydney.html",
+  "cloud-services-sydney.html",
+  "website-design-small-business-sydney.html",
+  "seo-google-ads-sydney.html",
+  "it-support-north-shore-sydney.html",
+]);
 
 function walk(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -115,12 +129,36 @@ for (const file of htmlFiles) {
     if (!found) failures.push(`${label}: missing Open Graph ${property}`);
   }
 
+  const jsonLd = [];
   for (const match of html.matchAll(/<script\s+[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
     try {
-      JSON.parse(match[1].trim());
+      jsonLd.push(JSON.parse(match[1].trim()));
     } catch (error) {
       failures.push(`${label}:${lineOf(html, match.index)} invalid JSON-LD (${error.message})`);
     }
+  }
+
+  if (SERVICE_PAGES.has(rel)) {
+    const schemaTypes = new Set(jsonLd.map((item) => item["@type"]));
+    for (const type of ["Service", "FAQPage", "BreadcrumbList"]) {
+      if (!schemaTypes.has(type)) failures.push(`${label}: missing ${type} JSON-LD`);
+    }
+    const visibleFaqCount = [...html.matchAll(/class=["']faq-item["']/gi)].length;
+    if (visibleFaqCount < 4 || visibleFaqCount > 6) {
+      failures.push(`${label}: expected 4–6 visible FAQs, found ${visibleFaqCount}`);
+    }
+    const schemaFaqCount = jsonLd
+      .filter((item) => item["@type"] === "FAQPage")
+      .reduce((count, item) => count + (Array.isArray(item.mainEntity) ? item.mainEntity.length : 0), 0);
+    if (schemaFaqCount !== visibleFaqCount) {
+      failures.push(`${label}: visible FAQ count ${visibleFaqCount} does not match schema count ${schemaFaqCount}`);
+    }
+    const hero = html.match(/<section\s+class=["']page-hero["'][^>]*>([\s\S]*?)<\/section>/i)?.[1] || "";
+    for (const href of ["/book", "/contact"]) {
+      if (!hero.includes(`href="${href}"`)) failures.push(`${label}: hero missing ${href} CTA`);
+    }
+    if (![...html.matchAll(/class=["']cta-section["']/gi)].length) failures.push(`${label}: missing final CTA section`);
+    if ([...html.matchAll(/class=["']service-card["']/gi)].length < 3) failures.push(`${label}: expected at least three service cards`);
   }
 
   if (!sitemapUrls.has(cleanUrl)) failures.push(`${label}: clean URL is missing from sitemap.xml`);
