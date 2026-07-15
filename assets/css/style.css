@@ -982,6 +982,49 @@ textarea:focus {
 }
 
 /* ---- Social share row ---- */
+.article-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 760px) minmax(240px, 320px);
+  gap: 48px;
+  align-items: start;
+}
+
+.article-content {
+  font-size: 1.05rem;
+}
+
+.article-content h2 {
+  margin-top: 42px;
+}
+
+.article-content h3 {
+  margin-top: 28px;
+}
+
+.article-content li + li {
+  margin-top: 8px;
+}
+
+.article-meta {
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.article-sidebar {
+  position: sticky;
+  top: 24px;
+}
+
+@media (max-width: 900px) {
+  .article-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .article-sidebar {
+    position: static;
+  }
+}
+
 .share-row {
   display: flex;
   align-items: center;
