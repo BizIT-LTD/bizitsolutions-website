@@ -99,7 +99,7 @@
     homePanel.classList.add("hero-visual");
     homePanel.insertAdjacentHTML(
       "afterbegin",
-      '<img src="/assets/images/technology/managed-it-services.webp" alt="IT specialists monitoring managed business technology systems" width="1600" height="777" fetchpriority="high" decoding="async">'
+      '<img src="/assets/images/technology/homepage-managed-it-support.webp" alt="Managed IT specialists monitoring business infrastructure and assisting an employee with workplace technology" width="1586" height="992" fetchpriority="high" decoding="async">'
     );
   }
 
