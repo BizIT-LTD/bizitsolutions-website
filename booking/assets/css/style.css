@@ -622,7 +622,10 @@ body {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 78px 0;
+  min-height: 560px;
+  display: grid;
+  align-items: center;
+  padding: 68px 0;
   background:
     radial-gradient(circle at 82% 18%, rgba(37,199,232,.25), transparent 24rem),
     radial-gradient(circle at 10% 90%, rgba(119,103,247,.17), transparent 28rem),
@@ -641,8 +644,8 @@ body {
 .booking-hero-grid {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, .95fr) minmax(420px, 1.05fr);
-  gap: 58px;
+  grid-template-columns: minmax(0, 1fr) minmax(380px, .9fr);
+  gap: 48px;
   align-items: center;
 }
 
@@ -667,13 +670,17 @@ h2 {
   border: 1px solid rgba(255,255,255,.16);
   border-radius: 24px;
   box-shadow: 0 32px 80px rgba(0,0,0,.3);
+  width: 100%;
+  max-width: 500px;
+  justify-self: end;
 }
 
 .booking-hero-media img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
+  object-position: center;
   border-radius: 16px;
 }
 
@@ -745,12 +752,18 @@ h2 {
 }
 
 @media (max-width: 900px) {
+  .hero {
+    min-height: 500px;
+    padding: 54px 0;
+  }
+
   .booking-hero-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr);
+    gap: 30px;
   }
 
   .booking-hero-media {
-    max-width: 680px;
+    max-width: 390px;
   }
 }
 
@@ -765,11 +778,23 @@ h2 {
   }
 
   .booking-hero-grid {
+    grid-template-columns: 1fr;
     gap: 36px;
   }
 
   .booking-hero-media {
-    display: none;
+    display: block;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+
+  .booking-hero-media img {
+    height: clamp(240px, 70vw, 300px);
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero {
+    min-height: auto;
   }
 }
 

@@ -78,6 +78,7 @@
   if (pageHero && imageDetails && !pageHero.querySelector(".page-hero-media")) {
     var heroContainer = pageHero.querySelector(".container");
     if (heroContainer) {
+      pageHero.classList.add("page-hero-with-media");
       heroContainer.classList.add("page-hero-grid");
       var media = document.createElement("figure");
       media.className = "page-hero-media";
