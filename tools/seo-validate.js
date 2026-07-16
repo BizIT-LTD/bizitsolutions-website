@@ -7,6 +7,7 @@ const ROOT = path.resolve(__dirname, "..");
 const SITE = "https://bizitsolutions.com.au";
 const SKIP_DIRS = new Set([".git", ".agents", "node_modules"]);
 const REQUIRED_FAVICON = "/assets/images/bizitFavicon400x400.png";
+const GA4_ID = "G-L9T1EK1FFP";
 const SERVICE_PAGES = new Set([
   "managed-it-services-sydney.html",
   "it-support-sydney.html",
@@ -96,6 +97,18 @@ for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
   const label = rel;
   const cleanUrl = `${SITE}${cleanUrlForFile(file)}`;
+
+  const head = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1] || "";
+  const gaLoaders = [...html.matchAll(/<script\b[^>]*src=["'][^"']*googletagmanager\.com\/gtag\/js\?id=G-L9T1EK1FFP[^"']*["'][^>]*>/gi)];
+  const gaConfigs = [...html.matchAll(/gtag\(\s*["']config["']\s*,\s*["']G-L9T1EK1FFP["']\s*\)/gi)];
+  if (!html.includes(GA4_ID)) failures.push(`${label}: missing Google Analytics ${GA4_ID}`);
+  if (gaLoaders.length !== 1 || gaConfigs.length !== 1) {
+    failures.push(`${label}: expected one Google Analytics tag, found ${gaLoaders.length} loader(s) and ${gaConfigs.length} config call(s)`);
+  }
+  if (!head.includes(GA4_ID)) failures.push(`${label}: Google Analytics tag is not inside <head>`);
+  if (gaLoaders.some((match) => !head.includes(match[0])) || gaConfigs.some((match) => !head.includes(match[0]))) {
+    failures.push(`${label}: Google Analytics loader or config exists outside <head>`);
+  }
 
   const title = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.trim();
   if (!title) failures.push(`${label}: missing title tag`);
