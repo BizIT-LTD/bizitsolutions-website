@@ -84,6 +84,28 @@ const warnings = [];
 const titles = new Map();
 const descriptions = new Map();
 
+const llmsPath = path.join(ROOT, "llms.txt");
+if (!fs.existsSync(llmsPath)) {
+  failures.push("llms.txt: file is missing");
+} else {
+  const llms = fs.readFileSync(llmsPath, "utf8");
+  if (!llms.startsWith("# BizITsolutions")) {
+    failures.push("llms.txt: must start with # BizITsolutions");
+  }
+
+  const llmsLinks = [...llms.matchAll(/\]\(([^)]+)\)/g)].map((match) => match[1]);
+  if (!llmsLinks.length || llmsLinks.some((url) => !url.startsWith(`${SITE}/`))) {
+    failures.push(`llms.txt: all Markdown links must be absolute URLs starting with ${SITE}/`);
+  }
+
+  for (const servicePage of SERVICE_PAGES) {
+    const serviceUrl = `${SITE}/${servicePage.slice(0, -".html".length)}`;
+    if (!llmsLinks.includes(serviceUrl)) {
+      failures.push(`llms.txt: missing main service page ${serviceUrl}`);
+    }
+  }
+}
+
 function remember(map, value, label) {
   if (!value) return;
   const key = value.replace(/\s+/g, " ").trim().toLowerCase();
