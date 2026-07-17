@@ -8,6 +8,7 @@ const SITE = "https://bizitsolutions.com.au";
 const SKIP_DIRS = new Set([".git", ".agents", "node_modules"]);
 const REQUIRED_FAVICON = "/assets/images/bizitFavicon400x400.png";
 const GA4_ID = "G-L9T1EK1FFP";
+const TAWK_EMBED_URL = "https://embed.tawk.to/6a59bc62e8f2331d4b1af445/1jtn8fova";
 const SERVICE_PAGES = new Set([
   "managed-it-services-sydney.html",
   "it-support-sydney.html",
@@ -130,6 +131,18 @@ for (const file of htmlFiles) {
   if (!head.includes(GA4_ID)) failures.push(`${label}: Google Analytics tag is not inside <head>`);
   if (gaLoaders.some((match) => !head.includes(match[0])) || gaConfigs.some((match) => !head.includes(match[0]))) {
     failures.push(`${label}: Google Analytics loader or config exists outside <head>`);
+  }
+
+  const tawkEmbeds = [...html.matchAll(/https:\/\/embed\.tawk\.to\/6a59bc62e8f2331d4b1af445\/1jtn8fova/gi)];
+  if (tawkEmbeds.length !== 1) {
+    failures.push(`${label}: expected one tawk.to script, found ${tawkEmbeds.length}`);
+  }
+  const closingBodyIndex = html.search(/<\/body\s*>/i);
+  if (closingBodyIndex === -1 || tawkEmbeds.some((match) => match.index > closingBodyIndex)) {
+    failures.push(`${label}: tawk.to script must appear before </body>`);
+  }
+  if (tawkEmbeds.length === 1 && !html.includes(TAWK_EMBED_URL)) {
+    failures.push(`${label}: tawk.to embed URL does not match ${TAWK_EMBED_URL}`);
   }
 
   const title = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.trim();
