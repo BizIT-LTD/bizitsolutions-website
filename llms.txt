@@ -11,6 +11,7 @@ BizITsolutions provides managed IT services, business IT support, Microsoft 365,
 
 ## Service landing pages
 
+- [IT Company Sydney](https://bizitsolutions.com.au/it-company-sydney) — Overview of managed IT, Microsoft 365, cyber security, cloud and support services for Sydney small businesses.
 - [Managed IT Services Sydney](https://bizitsolutions.com.au/managed-it-services-sydney) — Ongoing IT support, monitoring, administration and technology management for Sydney businesses.
 - [IT Support Sydney](https://bizitsolutions.com.au/it-support-sydney) — Responsive support for users, devices, cloud services and everyday business technology issues.
 - [Small Business IT Support Sydney](https://bizitsolutions.com.au/small-business-it-support-sydney) — Practical IT support designed for small and growing Sydney teams.
@@ -26,6 +27,7 @@ BizITsolutions provides managed IT services, business IT support, Microsoft 365,
 
 ## Blog articles
 
+- [How to Choose an IT Company in Sydney](https://bizitsolutions.com.au/blog/how-to-choose-an-it-company-in-sydney) — Guide to comparing IT support models, Microsoft 365 capability, security, communication and vendor coordination.
 - [How Much Does IT Support Cost in Sydney?](https://bizitsolutions.com.au/blog/how-much-does-it-support-cost-in-sydney) — Guide to IT support pricing models, cost drivers and provider comparisons.
 - [Managed IT Services vs Break-Fix IT Support](https://bizitsolutions.com.au/blog/managed-it-services-vs-break-fix-it-support) — Comparison of proactive managed IT services with reactive break-fix support.
 - [Microsoft 365 Security Checklist for Small Business](https://bizitsolutions.com.au/blog/microsoft-365-security-checklist-small-business) — Practical checklist covering Microsoft 365 identity, email, sharing, devices and recovery.

@@ -61,6 +61,7 @@
     "/cloud-services-sydney": ["cloud-collaboration.webp", "Business team planning secure cloud collaboration"],
     "/microsoft-azure": ["network-infrastructure.webp", "Technology specialist managing modern cloud infrastructure"],
     "/it-consulting-sydney": ["it-consulting.webp", "Technology consultant leading a business strategy workshop"],
+    "/it-company-sydney": ["managed-it-services.webp", "IT specialists monitoring and supporting business technology systems"],
     "/virtual-it-manager-sydney": ["it-consulting.webp", "Virtual IT manager presenting a practical technology roadmap"],
     "/about": ["it-consulting.webp", "Technology consultant collaborating with business leaders"],
     "/website-design-small-business-sydney": ["business-automation.webp", "Digital specialists planning a modern business solution"],

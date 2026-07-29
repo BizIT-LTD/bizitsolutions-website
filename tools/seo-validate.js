@@ -9,6 +9,7 @@ const SKIP_DIRS = new Set([".git", ".agents", "node_modules"]);
 const REQUIRED_FAVICON = "/assets/images/bizitFavicon400x400.png";
 const GA4_ID = "G-L9T1EK1FFP";
 const SERVICE_PAGES = new Set([
+  "it-company-sydney.html",
   "managed-it-services-sydney.html",
   "it-support-sydney.html",
   "small-business-it-support-sydney.html",
@@ -21,6 +22,9 @@ const SERVICE_PAGES = new Set([
   "website-design-small-business-sydney.html",
   "seo-google-ads-sydney.html",
   "it-support-north-shore-sydney.html",
+]);
+const REQUIRED_BLOG_PAGES = new Set([
+  "blog/how-to-choose-an-it-company-in-sydney.html",
 ]);
 
 function walk(dir) {
@@ -102,6 +106,13 @@ if (!fs.existsSync(llmsPath)) {
     const serviceUrl = `${SITE}/${servicePage.slice(0, -".html".length)}`;
     if (!llmsLinks.includes(serviceUrl)) {
       failures.push(`llms.txt: missing main service page ${serviceUrl}`);
+    }
+  }
+
+  for (const blogPage of REQUIRED_BLOG_PAGES) {
+    const blogUrl = `${SITE}/${blogPage.slice(0, -".html".length)}`;
+    if (!llmsLinks.includes(blogUrl)) {
+      failures.push(`llms.txt: missing required blog page ${blogUrl}`);
     }
   }
 }
@@ -189,11 +200,19 @@ for (const file of htmlFiles) {
       failures.push(`${label}: visible FAQ count ${visibleFaqCount} does not match schema count ${schemaFaqCount}`);
     }
     const hero = html.match(/<section\s+class=["']page-hero["'][^>]*>([\s\S]*?)<\/section>/i)?.[1] || "";
-    for (const href of ["/book", "/contact"]) {
+    const requiredHeroLinks = rel === "it-company-sydney.html" ? ["/book", "/services"] : ["/book", "/contact"];
+    for (const href of requiredHeroLinks) {
       if (!hero.includes(`href="${href}"`)) failures.push(`${label}: hero missing ${href} CTA`);
     }
     if (![...html.matchAll(/class=["']cta-section["']/gi)].length) failures.push(`${label}: missing final CTA section`);
     if ([...html.matchAll(/class=["']service-card["']/gi)].length < 3) failures.push(`${label}: expected at least three service cards`);
+  }
+
+  if (REQUIRED_BLOG_PAGES.has(rel)) {
+    const schemaTypes = new Set(jsonLd.map((item) => item["@type"]));
+    for (const type of ["Article", "BreadcrumbList"]) {
+      if (!schemaTypes.has(type)) failures.push(`${label}: missing ${type} JSON-LD`);
+    }
   }
 
   if (!sitemapUrls.has(cleanUrl)) failures.push(`${label}: clean URL is missing from sitemap.xml`);
