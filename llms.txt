@@ -1,13 +1,13 @@
-# BizITsolutions
+# BizIT Solutions
 
-BizITsolutions provides managed IT services, business IT support, Microsoft 365, cloud, cyber security and practical technology consulting for small and growing Australian businesses.
+BizIT Solutions provides managed IT services, business IT support, Microsoft 365, cloud, cyber security and practical technology consulting for small and growing Australian businesses.
 
 ## Main pages
 
-- [Homepage](https://bizitsolutions.com.au/) — Overview of BizITsolutions and its managed IT, cloud, security and consulting services.
+- [Homepage](https://bizitsolutions.com.au/) — Overview of BizIT Solutions and its managed IT, cloud, security and consulting services.
 - [Services](https://bizitsolutions.com.au/services) — Summary of the IT service areas available to small and growing businesses.
 - [Contact](https://bizitsolutions.com.au/contact) — Contact details and enquiry form for discussing IT support and consulting needs.
-- [Book a Consultation](https://bizitsolutions.com.au/book) — Booking page for arranging a consultation with BizITsolutions.
+- [Book a Consultation](https://bizitsolutions.com.au/book) — Booking page for arranging a consultation with BizIT Solutions.
 
 ## Service landing pages
 

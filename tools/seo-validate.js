@@ -105,8 +105,8 @@ if (!fs.existsSync(llmsPath)) {
   failures.push("llms.txt: file is missing");
 } else {
   const llms = fs.readFileSync(llmsPath, "utf8");
-  if (!llms.startsWith("# BizITsolutions")) {
-    failures.push("llms.txt: must start with # BizITsolutions");
+  if (!llms.startsWith("# BizIT Solutions")) {
+    failures.push("llms.txt: must start with # BizIT Solutions");
   }
 
   const llmsLinks = [...llms.matchAll(/\]\(([^)]+)\)/g)].map((match) => match[1]);
