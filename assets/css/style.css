@@ -406,6 +406,22 @@ p {
   line-height: 1;
 }
 
+.service-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.service-card-head .service-icon {
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+.service-card-head h3 {
+  margin: 0;
+}
+
 .service-link {
   display: inline-flex;
   align-items: center;
