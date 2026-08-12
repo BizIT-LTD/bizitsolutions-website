@@ -1186,8 +1186,8 @@ body {
 }
 
 .hero {
-  min-height: 0;
-  height: 520px;
+  min-height: 520px;
+  height: auto;
   max-height: none;
   display: grid;
   align-items: center;
@@ -1671,8 +1671,8 @@ h3 {
   }
 
   .hero {
-    min-height: 0;
-    height: 480px;
+    min-height: 480px;
+    height: auto;
     max-height: none;
     padding: 28px 0;
   }
