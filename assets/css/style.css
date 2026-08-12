@@ -418,6 +418,7 @@ p {
   margin-bottom: 0;
 }
 
+.service-card-head h2,
 .service-card-head h3 {
   margin: 0;
 }
