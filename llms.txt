@@ -4,6 +4,7 @@ BizIT Solutions provides managed IT services, business IT support, Microsoft 365
 
 ## Main pages
 
+- [Privacy Policy](https://bizitsolutions.com.au/privacy/) — Information about how BizIT Solutions collects, uses, discloses, secures and retains personal information.
 - [Homepage](https://bizitsolutions.com.au/) — Overview of BizIT Solutions and its managed IT, cloud, security and consulting services.
 - [Services](https://bizitsolutions.com.au/services) — Summary of the IT service areas available to small and growing businesses.
 - [Contact](https://bizitsolutions.com.au/contact) — Contact details and enquiry form for discussing IT support and consulting needs.

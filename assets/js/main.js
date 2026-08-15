@@ -7,6 +7,15 @@
     year.textContent = new Date().getFullYear();
   }
 
+  var footerLinkContainer = document.querySelector(".footer-bottom, .site-footer .footer-inner");
+  if (footerLinkContainer && !footerLinkContainer.querySelector('a[href="/privacy/"]')) {
+    var privacyLink = document.createElement("a");
+    privacyLink.href = "/privacy/";
+    privacyLink.className = "footer-privacy-link";
+    privacyLink.textContent = "Privacy Policy";
+    footerLinkContainer.appendChild(privacyLink);
+  }
+
   if (toggle && nav) {
     toggle.addEventListener("click", function () {
       var isOpen = nav.classList.toggle("is-open");
