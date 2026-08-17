@@ -81,7 +81,7 @@
     "/seo-google-ads-sydney": ["business-automation.webp", "Business team reviewing a digital growth workflow"],
     "/seo-google-ads": ["business-automation.webp", "Business professionals reviewing digital performance"],
     "/services": ["network-infrastructure.webp", "IT specialist managing reliable business infrastructure"],
-    "/contact": ["it-consulting.webp", "Business leaders discussing technology needs with an IT specialist"],
+    "/contact": ["contact-managed-it-consulting.webp", "IT specialist helping a business team with workplace technology"],
     "/book": ["it-consulting.webp", "IT specialist meeting with business leaders"],
     "/booking": ["it-consulting.webp", "Technology consultation with business leaders"]
   };
@@ -98,7 +98,7 @@
       var image = document.createElement("img");
       image.src = "/assets/images/technology/" + imageDetails[0];
       image.alt = imageDetails[1];
-      image.width = imageDetails[0] === "cloud-collaboration.webp" ? 1600 : imageDetails[0] === "it-consulting.webp" ? 1600 : imageDetails[0] === "managed-it-services.webp" ? 1600 : imageDetails[0] === "network-infrastructure.webp" ? 1502 : 1500;
+      image.width = imageDetails[0] === "cloud-collaboration.webp" ? 1600 : imageDetails[0] === "it-consulting.webp" ? 1600 : imageDetails[0] === "contact-managed-it-consulting.webp" ? 1600 : imageDetails[0] === "managed-it-services.webp" ? 1600 : imageDetails[0] === "network-infrastructure.webp" ? 1502 : 1500;
       image.height = imageDetails[0] === "cloud-collaboration.webp" ? 729 : imageDetails[0] === "it-consulting.webp" ? 843 : imageDetails[0] === "managed-it-services.webp" ? 777 : 1000;
       image.fetchPriority = "high";
       image.decoding = "async";
