@@ -159,6 +159,7 @@
       var form = document.getElementById('contact-form');
       var status = document.getElementById('form-status');
       if (!form || !status) return;
+      var leadGenerated = false;
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var btn = form.querySelector('button[type="submit"]');
@@ -174,6 +175,10 @@
         })
           .then(function (res) {
             if (res.ok) {
+              if (!leadGenerated && typeof gtag === 'function') {
+                gtag('event', 'generate_lead');
+                leadGenerated = true;
+              }
               status.textContent = 'Thank you — your enquiry has been sent. We’ll be in touch shortly.';
               status.className = 'form-status form-success';
               form.reset();
