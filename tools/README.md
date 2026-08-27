@@ -1,7 +1,18 @@
-# Future Tools Subdomain
+# Website tools
 
-This folder is reserved for future Node.js tools that can be hosted separately under:
+## IndexNow submission
 
-`tools.bizitsolutions.com.au`
+Submit specific changed or new pages from the repository root:
 
-No backend has been added yet. Keep the current public website static and deploy it from the root hosting directory. When tools are introduced later, use this folder as the separate Node.js application workspace and point the subdomain document root or reverse proxy to that app.
+```text
+node tools/indexnow-submit.js /contact /services
+node tools/indexnow-submit.js contact.html blog/index.html
+```
+
+Running with no arguments submits changed and untracked HTML pages detected by Git:
+
+```text
+node tools/indexnow-submit.js
+```
+
+The command reads the public IndexNow key from `indexnow-key.txt`, converts HTML filenames to the site's clean canonical URLs, removes duplicates, and rejects URLs outside `https://bizitsolutions.com.au`. Deploy the root key file before submitting URLs.
