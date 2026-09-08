@@ -9,7 +9,9 @@ RewriteCond %{HTTP_HOST} ^www\.bizitsolutions\.com\.au$ [NC]
 RewriteRule ^ https://bizitsolutions.com.au%{REQUEST_URI} [R=301,L]
 
 # Retired service pages now resolve to the current service offering anchors.
-RewriteRule ^business-it-support(?:\.html)?/?$ /services#it-managed-services [R=301,L,NE]
+# business-it-support goes to the dedicated small-business support page instead
+# of a /services anchor, since that page now covers its search intent directly.
+RewriteRule ^business-it-support(?:\.html)?/?$ /small-business-it-support-sydney [R=301,L,NE]
 RewriteRule ^microsoft-365(?:\.html)?/?$ /services#it-managed-services [R=301,L,NE]
 RewriteRule ^microsoft-azure(?:\.html)?/?$ /services#it-consultancy [R=301,L,NE]
 RewriteRule ^managed-services(?:\.html)?/?$ /services#it-managed-services [R=301,L,NE]
