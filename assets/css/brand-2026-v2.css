@@ -1,0 +1,54 @@
+/* Shared icon and wordmark for the main site and booking pages. */
+.site-header .site-brand {
+  width: auto !important;
+  max-width: 100% !important;
+  flex: 0 0 auto !important;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.site-header .site-brand .site-logo {
+  width: 56px !important;
+  height: 56px !important;
+  max-width: 56px !important;
+  max-height: 56px !important;
+  flex: 0 0 56px;
+  object-fit: contain !important;
+}
+
+.site-brand-name {
+  color: var(--navy);
+  font-family: inherit;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+@media (max-width: 768px) {
+  .site-header .site-brand {
+    gap: 6px;
+  }
+
+  .site-header .site-brand .site-logo {
+    width: 44px !important;
+    height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    flex-basis: 44px;
+  }
+
+  .site-brand-name {
+    font-size: 21px;
+  }
+
+  /* Booking has inline links rather than a collapsible menu. */
+  .site-header .header-inner:has(.header-nav) {
+    flex-wrap: wrap;
+  }
+
+  .site-header .header-nav {
+    flex-basis: 100%;
+    justify-content: flex-start;
+  }
+}

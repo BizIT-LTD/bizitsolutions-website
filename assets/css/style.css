@@ -1922,3 +1922,10 @@ h3 {
     transform: none;
   }
 }
+
+/* Keep decorative image glows inside narrow viewports. */
+@media (max-width: 700px) {
+  .media-frame::after {
+    right: 0;
+  }
+}
