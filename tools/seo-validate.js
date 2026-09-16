@@ -211,7 +211,7 @@ for (const file of htmlFiles) {
     if (schemaFaqCount !== visibleFaqCount) {
       failures.push(`${label}: visible FAQ count ${visibleFaqCount} does not match schema count ${schemaFaqCount}`);
     }
-    const hero = html.match(/<section\s+class=["']page-hero["'][^>]*>([\s\S]*?)<\/section>/i)?.[1] || "";
+    const hero = html.match(/<section\s+class=["'][^"']*\bpage-hero\b[^"']*["'][^>]*>([\s\S]*?)<\/section>/i)?.[1] || "";
     const requiredHeroLinks = rel === "it-company-sydney.html" ? ["/book", "/services"] : ["/book", "/contact"];
     for (const href of requiredHeroLinks) {
       if (!hero.includes(`href="${href}"`)) failures.push(`${label}: hero missing ${href} CTA`);
