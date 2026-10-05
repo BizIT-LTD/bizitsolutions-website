@@ -368,7 +368,7 @@
   }
 
   .hero-js .hero-logo-b-clip {
-    r: 0;
+    r: 0px;
   }
 
   /* Wordmark hidden state: one flat plane tilted back and receded in
@@ -411,7 +411,8 @@
 
   .hero-js .hero-animated.hero-animate-start .hero-logo-b-clip {
     transition: r 620ms cubic-bezier(0.4, 0, 0.2, 1) 520ms;
-    r: 67.2;
+    /* WebKit rejects a unitless non-zero CSS radius, leaving the B hidden. */
+    r: 67.2px;
   }
 
   .hero-js .hero-animated.hero-animate-start .hero-logo-word {
