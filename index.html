@@ -32,7 +32,8 @@
   <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"LocalBusiness","name":"BizIT Solutions","url":"https://bizitsolutions.com.au/","logo":"https://bizitsolutions.com.au/assets/images/bizit-logo-2026.png?v=20260815","image":"https://bizitsolutions.com.au/assets/images/bizit-logo-2026.png?v=20260815","description":"Managed IT services, IT support, Microsoft 365, cloud, cyber security and IT consulting for small and growing Sydney businesses.","areaServed":[{"@type":"City","name":"Sydney"},{"@type":"Place","name":"North Shore"},{"@type":"Place","name":"Northern Beaches"},{"@type":"Place","name":"Hills District"}],"sameAs":["https://www.linkedin.com/company/bizit-solutions"]}
   </script>
-  <link rel="stylesheet" href="assets/css/style.css?v=15"><link rel="stylesheet" href="/assets/css/brand-2026-v2.css?v=2">
+  <link rel="stylesheet" href="assets/css/style.css?v=15"><link rel="stylesheet" href="/assets/css/brand-2026-v2.css?v=2"><link rel="stylesheet" href="/assets/css/hero-animated.css?v=20261005">
+  <script>document.documentElement.classList.add('hero-js');</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -57,34 +58,74 @@
   </header>
 
   <main id="main">
-    <section class="hero">
-      <div class="container hero-grid">
+    <section class="hero hero-animated" id="hero">
+      <div class="hero-media" aria-hidden="true">
+        <div class="hero-poster"></div>
+        <video class="hero-video" muted loop playsinline preload="auto" poster="/assets/images/hero/bizit-hero-cinematic-poster.jpg?v=20261005" tabindex="-1">
+          <source src="/assets/videos/bizit-hero-cinematic-loop-preview.mp4?v=20261005" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-contrast" aria-hidden="true"></div>
+
+      <div class="container hero-stack">
+        <div class="hero-logo-stage" aria-hidden="true">
+          <div class="hero-logo-ring-wrap">
+            <div class="hero-logo-plate"></div>
+            <svg class="hero-logo-svg" viewBox="0 0 200 200">
+              <defs>
+                <mask id="heroRingMask" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+                  <circle class="hero-logo-ring-stroke" cx="100" cy="100" r="71.92" fill="none" stroke="#ffffff" stroke-width="6.15" stroke-dasharray="451.91" stroke-dashoffset="0" transform="rotate(-90 100 100)"></circle>
+                </mask>
+                <clipPath id="heroBClip">
+                  <circle class="hero-logo-b-clip" cx="100" cy="100" r="67.2"></circle>
+                </clipPath>
+              </defs>
+              <image class="hero-logo-ring-image" href="/assets/images/branding/bizit-logo-new-final.jpg?v=20261004" x="-9.50" y="-7.79" width="219.12" height="219.12" mask="url(#heroRingMask)"></image>
+              <image class="hero-logo-b-image" href="/assets/images/branding/bizit-logo-new-final.jpg?v=20261004" x="-9.50" y="-7.79" width="219.12" height="219.12" clip-path="url(#heroBClip)"></image>
+            </svg>
+          </div>
+          <div class="hero-logo-word"><span class="hero-logo-word-bizit">BizIT</span> <span class="hero-logo-word-solutions">Solutions</span></div>
+        </div>
+
+        <div class="hero-service-stage" aria-hidden="true">
+          <span class="hero-service-item" style="--i:0">
+            <span class="hero-service-trail"></span>
+            <span class="hero-service-text">Managed IT</span>
+          </span>
+          <span class="hero-service-item" style="--i:1">
+            <span class="hero-service-trail"></span>
+            <span class="hero-service-text">Microsoft 365</span>
+          </span>
+          <span class="hero-service-item" style="--i:2">
+            <span class="hero-service-trail"></span>
+            <span class="hero-service-text">Cloud Services</span>
+          </span>
+          <span class="hero-service-item" style="--i:3">
+            <span class="hero-service-trail"></span>
+            <span class="hero-service-text">Cyber Security</span>
+          </span>
+          <span class="hero-service-item" style="--i:4">
+            <span class="hero-service-trail"></span>
+            <span class="hero-service-text">NOC &amp; SOC</span>
+          </span>
+          <span class="hero-service-item" style="--i:5">
+            <span class="hero-service-trail"></span>
+            <span class="hero-service-text">IT Consulting</span>
+          </span>
+        </div>
+
         <div class="hero-copy">
-          <h1>Managed IT Services and IT Support for Sydney Businesses</h1>
-          <p class="hero-lead">Practical IT support, Microsoft 365, cyber security, cloud and technology guidance for small and growing businesses across Sydney.</p>
-          <div class="hero-actions">
+          <h1 class="hero-reveal-h1 hero-h1"><span class="hero-h1-line hero-h1-line-1"><span class="hero-h1-reflect hero-h1-reflect-1"><span class="hero-word-mask"><span class="hero-word-entrance"><span class="hero-word-wave">Managed</span></span></span> <span class="hero-word-mask"><span class="hero-word-entrance"><span class="hero-word-wave">IT</span></span></span> <span class="hero-word-mask"><span class="hero-word-entrance"><span class="hero-word-wave">Services</span></span></span></span></span>
+          <span class="hero-h1-line hero-h1-line-2"><span class="hero-h1-reflect hero-h1-reflect-2"><span class="hero-word-mask"><span class="hero-word-entrance"><span class="hero-word-wave">and</span></span></span> <span class="hero-word-mask"><span class="hero-word-entrance"><span class="hero-word-wave">IT</span></span></span> <span class="hero-word-mask"><span class="hero-word-entrance"><span class="hero-word-wave">Support</span></span></span> <span class="hero-word-mask"><span class="hero-word-entrance"><span class="hero-word-wave">for</span></span></span> <span class="hero-word-mask"><span class="hero-word-entrance"><span class="hero-word-wave">Businesses</span></span></span></span></span></h1>
+          <p class="hero-lead hero-reveal hero-reveal-lead">Practical IT support, Microsoft 365, cyber security, cloud and technology guidance for small and growing businesses.</p>
+          <div class="hero-actions hero-reveal hero-reveal-actions">
             <a class="btn btn-primary" href="/book">Book a Consultation</a>
             <a class="btn btn-secondary" href="/services">View Our Services</a>
           </div>
-          <div class="hero-trust" aria-label="Service strengths">
+          <div class="hero-trust hero-reveal hero-reveal-trust" aria-label="Service strengths">
             <span>Responsive support</span>
             <span>Microsoft expertise</span>
             <span>Cybersecurity focus</span>
-          </div>
-        </div>
-        <div class="hero-panel hero-visual" aria-label="BizIT Solutions service highlights">
-          <img src="/assets/images/technology/homepage-managed-it-support.webp?v=20260917" alt="Managed IT specialists monitoring business infrastructure and assisting an employee with workplace technology" width="1586" height="992" fetchpriority="high" decoding="async">
-          <div class="metric-card">
-            <span>Support</span>
-            <strong>Managed IT</strong>
-          </div>
-          <div class="metric-card">
-            <span>Operations</span>
-            <strong>NOC & SOC</strong>
-          </div>
-          <div class="metric-card">
-            <span>Advisory</span>
-            <strong>Compliance & Consultancy</strong>
           </div>
         </div>
       </div>
@@ -322,5 +363,6 @@
     </div>
   </footer>
   <script src="assets/js/main.js?v=7" defer></script>
+  <script src="/assets/js/hero-animated.js?v=20261005" defer></script>
 </body>
 </html>

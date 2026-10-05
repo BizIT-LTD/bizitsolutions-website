@@ -1,0 +1,641 @@
+/* Homepage hero — cinematic glass-video background. Scoped entirely to
+   .hero-animated; do not reuse these class names elsewhere, and do not
+   touch .hero/.page-hero base rules shared with other pages.
+
+   Default state (no JS, or JS has not run yet) renders the finished,
+   fully visible, fully static scene — animation is opt-in via .hero-js
+   on <html>, added synchronously in <head> before first paint. The
+   <video poster> is the complete static fallback for no-JS, reduced
+   motion, media failure and blocked autoplay alike (JS only ever
+   starts playback; it is never required to show a correct hero). */
+
+.hero-animated {
+  --header-h: 78px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100svh - var(--header-h));
+  height: auto;
+  max-height: none;
+  padding: 48px 0;
+  overflow: hidden;
+  background: #eaf2ff;
+  color: var(--navy);
+}
+
+@media (max-width: 768px) {
+  .hero-animated {
+    --header-h: 58px;
+    padding: 36px 0;
+  }
+}
+
+/* ----------------------------------------------------------------
+   Background: a static poster (always rendered) with the cinematic
+   video loop on top of it, plus a soft central contrast layer.
+   Stacked back-to-front: poster(0) < video(0, on top of poster in DOM
+   order) < contrast(1) < content(2).
+
+   The video is `display: none` by default — not just paused, not
+   rendered at all — so a no-JS or reduced-motion visitor never gets
+   so much as a hidden <video> element for the browser to attach its
+   own native controls UI to. JS only ever reveals it (adds
+   .hero-video-ready) once playback has actually, successfully
+   started; the poster underneath is the complete fallback for every
+   other case (no-JS, reduced motion, blocked/failed autoplay, a
+   media error) with zero extra logic needed. */
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #eaf2ff center / cover no-repeat url("/assets/images/hero/bizit-hero-cinematic-poster.jpg?v=20261005");
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  display: none;
+}
+
+.hero-video.hero-video-ready {
+  display: block;
+}
+
+/* Restrained — the video's own clear centre already has good natural
+   contrast (confirmed against the poster); this just evens it out so
+   dark navy text stays readable regardless of which moment of the
+   loop is showing. */
+.hero-contrast {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse 62% 68% at 50% 48%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.14) 58%, transparent 78%);
+  pointer-events: none;
+}
+
+/* ----------------------------------------------------------------
+   Content stack — single centred column.
+   ---------------------------------------------------------------- */
+
+.hero-animated .hero-stack {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.hero-logo-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+/* Light plate behind the logo — the video is already light, but this
+   guarantees consistent contrast for the dark navy B regardless of
+   which frame of the loop sits behind it. Background treatment only;
+   the artwork itself is never recoloured. */
+.hero-logo-plate {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 112%;
+  height: 112%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.86) 68%, rgba(255, 255, 255, 0.5) 90%, rgba(255, 255, 255, 0) 100%);
+  box-shadow: 0 10px 34px rgba(10, 40, 90, 0.16);
+  pointer-events: none;
+}
+
+.hero-logo-ring-wrap {
+  position: relative;
+  width: clamp(126px, 12vw, 176px);
+  aspect-ratio: 1 / 1;
+}
+
+.hero-logo-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* The two <image> elements are identical, unedited copies of the
+   source artwork (bizit-logo-new-final.jpg), placed and scaled from
+   measured geometry (centre, outer ring radius, ring band thickness —
+   see commit notes), not guessed. One is masked to the ring's annulus
+   only (revealed clockwise via stroke-dashoffset on the mask's own
+   circle); the other is clipped to a disc that stops just inside the
+   ring's inner edge. Together they tile into the complete original
+   logo with no gap and no doubled ring, and no filter/blend-mode ever
+   touches either copy. */
+.hero-logo-ring-image,
+.hero-logo-b-image {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* ----------------------------------------------------------------
+   Wordmark — real text (not a cropped image), reusing the header's
+   exact font, weight, letter-spacing and two-tone colours
+   (.site-brand-bizit / .site-brand-solutions), just larger and set
+   closer to the B so logo + wordmark read as one unit.
+   ---------------------------------------------------------------- */
+.hero-logo-word {
+  font-family: inherit;
+  font-weight: 800;
+  font-size: clamp(30px, 2.8vw, 42px);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  opacity: 1;
+  transform: none;
+}
+
+.hero-logo-word-bizit {
+  color: #001f4e;
+}
+
+.hero-logo-word-solutions {
+  color: #004cf0;
+}
+
+/* ----------------------------------------------------------------
+   Service typography cycler — a more prominent secondary feature
+   (~24px desktop / ~18px mobile). One item visible at a time in a
+   fixed-height, overflow-hidden slot — the slot itself is the "mask"
+   the outgoing/incoming items slide and tilt through.
+   ---------------------------------------------------------------- */
+.hero-service-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(38px, 5vw, 50px);
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+
+/* No-JS / reduced-motion fallback: show exactly one service (the
+   first) as a plain static line — never zero, never all six stacked.
+   The cycling animation further down takes over once JS has run and
+   motion is allowed. */
+.hero-service-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+}
+
+.hero-service-item[style*="--i:0"] {
+  opacity: 1;
+}
+
+.hero-service-trail {
+  display: inline-block;
+  width: 26px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #0d47a1);
+  border-radius: 2px;
+}
+
+.hero-service-text {
+  color: #0a2a5e;
+  font-size: clamp(1.25rem, 2.1vw, 1.5rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Headline — one real H1 with the complete wording, split into two
+   block-level lines so the desktop arrangement reads
+     "Managed IT Services"
+     "and IT Support for Businesses"
+   Always crisp navy; the only colour motion is the narrow blue
+   reflection below, which is itself anchored on navy at rest.
+
+   Three independent transform/paint layers per word, deliberately
+   kept on separate elements so none of them can ever override another
+   (the brief's explicit requirement):
+     .hero-word-mask     — overflow:hidden clip box, the "mask" the
+                            word rises from behind. Never transforms.
+     .hero-word-entrance — ONE-TIME rise + 3D tilt-settle transition,
+                            driven by .hero-animate-start. `transform`.
+     .hero-word-wave      — REPEATING per-word lift pulse, driven by
+                            .hero-ambient. Also `transform`, but on a
+                            different element from .hero-word-entrance.
+     .hero-h1-reflect     — REPEATING background-position sweep across
+                            a whole phrase. A different CSS property
+                            (background-position, not transform) on a
+                            different element again, so it can never
+                            collide with either transform layer. */
+.hero-h1 {
+  margin: 0;
+  color: var(--navy);
+}
+
+.hero-h1-line {
+  display: block;
+}
+
+.hero-word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.hero-word-entrance,
+.hero-word-wave {
+  display: inline-block;
+}
+
+/* Reflection: solid navy almost everywhere, with a narrow bright-blue
+   band that sweeps through once per occurrence (see @keyframes
+   heroReflect1/2). At rest (0% or 100% position) both ends of the
+   gradient are solid navy, so the headline's resting colour is never
+   anything but navy — "restrained blue depth", not a colour change. */
+/* .hero-h1-reflect is now just an inert grouping wrapper (kept for
+   the per-phrase selectors elsewhere) — the gradient-clip lives on
+   .hero-word-wave directly. Putting background-clip:text on an
+   ancestor several nested inline-blocks above the actual text node
+   did not paint through reliably in testing (confirmed by forcing a
+   solid colour on .hero-word-wave, which rendered fine, while the
+   ancestor's gradient never showed at all) — so each word now carries
+   its own copy of the same gradient, synchronised across a phrase via
+   closely-staggered delays so they read as one band travelling
+   through rather than a single shared paint. */
+.hero-h1-reflect {
+  color: var(--navy);
+}
+
+.hero-word-wave {
+  color: var(--navy);
+}
+
+@supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  /* Dark navy to restrained cobalt only — no near-white stops, so the
+     text never thins out toward the background's own light tone.
+     Narrower band (40-60%, was 30-70%) than the first pass, which
+     washed letters out and read as a loss of opacity around the 4-5s
+     and 8-9s marks. */
+  .hero-word-wave {
+    background-image: linear-gradient(
+      100deg,
+      var(--navy) 0%,
+      var(--navy) 40%,
+      #15336f 46%,
+      #1e4fc0 50%,
+      #15336f 54%,
+      var(--navy) 60%,
+      var(--navy) 100%
+    );
+    background-size: 300% 100%;
+    background-position: 0% 0%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.hero-animated .hero-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.hero-animated .hero-reveal-h1 {
+  max-width: 960px;
+}
+
+.hero-animated .hero-reveal-lead {
+  max-width: 620px;
+  color: rgba(6, 20, 56, 0.72);
+}
+
+.hero-animated .hero-actions {
+  justify-content: center;
+}
+
+.hero-animated .hero-trust {
+  justify-content: center;
+  color: rgba(6, 20, 56, 0.62);
+}
+
+/* Secondary CTA was designed for a dark hero (white text, faint white
+   fill) — this scene is light, so it needs a navy-on-light treatment
+   with the same outline weight. Primary CTA is untouched; it already
+   reads fine on light backgrounds. */
+.hero-animated .btn-secondary {
+  color: var(--navy);
+  border-color: rgba(6, 20, 56, 0.3);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* ----------------------------------------------------------------
+   Animation opt-in: JS has run and reduced-motion is not requested.
+   ---------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-js .hero-logo-ring-stroke {
+    stroke-dashoffset: 451.91;
+  }
+
+  .hero-js .hero-logo-b-clip {
+    r: 0;
+  }
+
+  /* Wordmark hidden state: one flat plane tilted back and receded in
+     depth, below its resting position. perspective() is part of the
+     transform value itself so the element needs no 3D-context parent. */
+  .hero-js .hero-logo-word {
+    opacity: 0;
+    transform: perspective(600px) translateY(18px) translateZ(-60px) rotateX(-45deg);
+    transform-origin: 50% 100%;
+  }
+
+  .hero-js .hero-animated .hero-reveal {
+    transform: translateY(16px);
+  }
+
+  .hero-js .hero-service-item {
+    opacity: 0;
+  }
+
+  /* Each word rises from behind its .hero-word-mask with a backward
+     3D tilt, settling flat. This transform lives on .hero-word-entrance
+     only — never on .hero-word-wave (the repeating layer, further
+     down) — so the one-time entrance and the repeating pulse can never
+     collide on the same element. Layout box size is untouched
+     throughout, so buttons never move. */
+  .hero-js .hero-word-entrance {
+    opacity: 0;
+    transform: perspective(420px) translateY(100%) rotateX(-65deg);
+    transform-origin: 50% 100%;
+  }
+
+  /* Opening sequence — ring starts immediately, each following step
+     overlaps the previous, everything settled by ~2.3s.
+     1: ring traces (clockwise)  2: B + dots reveal  3: wordmark rises
+     4: headline rises/turns, then CTAs/trust follow. */
+  .hero-js .hero-animated.hero-animate-start .hero-logo-ring-stroke {
+    transition: stroke-dashoffset 820ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    stroke-dashoffset: 0;
+  }
+
+  .hero-js .hero-animated.hero-animate-start .hero-logo-b-clip {
+    transition: r 620ms cubic-bezier(0.4, 0, 0.2, 1) 520ms;
+    r: 67.2;
+  }
+
+  .hero-js .hero-animated.hero-animate-start .hero-logo-word {
+    transition: opacity 620ms ease 920ms, transform 620ms cubic-bezier(0.22, 0.75, 0.2, 1) 920ms;
+    opacity: 1;
+    transform: perspective(600px) translateY(0) translateZ(0) rotateX(0deg);
+  }
+
+  /* Words rise word by word with a short stagger, each settling flat
+     and sharp. Phrase 1 (3 words) starts once the wordmark has
+     essentially finished (~1.4s); phrase 2 (5 words) follows, with the
+     last word settled by ~2.37s — inside the ~2.5s target. */
+  .hero-js .hero-animated.hero-animate-start .hero-h1-reflect-1 > .hero-word-mask:nth-child(1) .hero-word-entrance {
+    transition: opacity 480ms ease 1400ms, transform 480ms cubic-bezier(0.22, 0.75, 0.2, 1) 1400ms;
+  }
+  .hero-js .hero-animated.hero-animate-start .hero-h1-reflect-1 > .hero-word-mask:nth-child(2) .hero-word-entrance {
+    transition: opacity 480ms ease 1470ms, transform 480ms cubic-bezier(0.22, 0.75, 0.2, 1) 1470ms;
+  }
+  .hero-js .hero-animated.hero-animate-start .hero-h1-reflect-1 > .hero-word-mask:nth-child(3) .hero-word-entrance {
+    transition: opacity 480ms ease 1540ms, transform 480ms cubic-bezier(0.22, 0.75, 0.2, 1) 1540ms;
+  }
+  .hero-js .hero-animated.hero-animate-start .hero-h1-reflect-2 > .hero-word-mask:nth-child(1) .hero-word-entrance {
+    transition: opacity 480ms ease 1610ms, transform 480ms cubic-bezier(0.22, 0.75, 0.2, 1) 1610ms;
+  }
+  .hero-js .hero-animated.hero-animate-start .hero-h1-reflect-2 > .hero-word-mask:nth-child(2) .hero-word-entrance {
+    transition: opacity 480ms ease 1680ms, transform 480ms cubic-bezier(0.22, 0.75, 0.2, 1) 1680ms;
+  }
+  .hero-js .hero-animated.hero-animate-start .hero-h1-reflect-2 > .hero-word-mask:nth-child(3) .hero-word-entrance {
+    transition: opacity 480ms ease 1750ms, transform 480ms cubic-bezier(0.22, 0.75, 0.2, 1) 1750ms;
+  }
+  .hero-js .hero-animated.hero-animate-start .hero-h1-reflect-2 > .hero-word-mask:nth-child(4) .hero-word-entrance {
+    transition: opacity 480ms ease 1820ms, transform 480ms cubic-bezier(0.22, 0.75, 0.2, 1) 1820ms;
+  }
+  .hero-js .hero-animated.hero-animate-start .hero-h1-reflect-2 > .hero-word-mask:nth-child(5) .hero-word-entrance {
+    transition: opacity 480ms ease 1890ms, transform 480ms cubic-bezier(0.22, 0.75, 0.2, 1) 1890ms;
+  }
+
+  .hero-js .hero-animated.hero-animate-start .hero-word-entrance {
+    opacity: 1;
+    transform: perspective(420px) translateY(0) rotateX(0deg);
+  }
+
+  .hero-js .hero-animated.hero-animate-start .hero-reveal-lead {
+    transition: transform 480ms ease 2080ms;
+    transform: translateY(0);
+  }
+
+  .hero-js .hero-animated.hero-animate-start .hero-reveal-actions {
+    transition: transform 480ms ease 2240ms;
+    transform: translateY(0);
+  }
+
+  .hero-js .hero-animated.hero-animate-start .hero-reveal-trust {
+    transition: transform 480ms ease 2400ms;
+    transform: translateY(0);
+  }
+
+  /* Keyboard focus entering the hero jumps straight to the finished
+     content position so the focus ring never lands on content that is
+     still mid-transform. The decorative scene is untouched. */
+  .hero-js .hero-animated.hero-content-instant .hero-reveal,
+  .hero-js .hero-animated.hero-content-instant .hero-word-entrance {
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+
+  /* ---- Ambient loop: repeating headline wave/reflection + service cycling ---- */
+
+  /* 8-second repeating sequence: a wave lifts each word of "Managed IT
+     Services" in turn, then a narrow blue reflection sweeps across
+     that phrase; a calm pause; then the same treatment across "and IT
+     Support for Businesses"; a longer calm pause before the loop
+     repeats. Every animation here targets .hero-word-wave or
+     .hero-h1-reflect — never .hero-word-entrance (the one-time layer
+     above) — so entrance and repeating motion can never collide. No
+     opacity change anywhere — the headline stays fully readable. */
+  /* Each word carries two independent animations at once — a lift
+     (transform) and a reflect sweep (background-position) — which is
+     safe because they're different CSS properties on the same
+     element; a comma-separated animation-delay list maps positionally
+     to the comma-separated animation list. The reflect delays are
+     timed to start just after their phrase's wave has finished
+     rolling through (phrase 1 ~1.84s, phrase 2 ~5.52s), each word
+     ~80ms after the previous so the band reads as travelling across
+     the phrase rather than flashing everywhere at once. */
+  .hero-js .hero-animated.hero-ambient .hero-h1-reflect-1 > .hero-word-mask:nth-child(1) .hero-word-wave {
+    animation: heroWordWave 8s ease-in-out infinite, heroWordReflect 8s ease-in-out infinite;
+    animation-delay: 0.3s, 1.9s;
+  }
+  .hero-js .hero-animated.hero-ambient .hero-h1-reflect-1 > .hero-word-mask:nth-child(2) .hero-word-wave {
+    animation: heroWordWave 8s ease-in-out infinite, heroWordReflect 8s ease-in-out infinite;
+    animation-delay: 0.55s, 1.98s;
+  }
+  .hero-js .hero-animated.hero-ambient .hero-h1-reflect-1 > .hero-word-mask:nth-child(3) .hero-word-wave {
+    animation: heroWordWave 8s ease-in-out infinite, heroWordReflect 8s ease-in-out infinite;
+    animation-delay: 0.8s, 2.06s;
+  }
+  .hero-js .hero-animated.hero-ambient .hero-h1-reflect-2 > .hero-word-mask:nth-child(1) .hero-word-wave {
+    animation: heroWordWave 8s ease-in-out infinite, heroWordReflect 8s ease-in-out infinite;
+    animation-delay: 3.6s, 5.6s;
+  }
+  .hero-js .hero-animated.hero-ambient .hero-h1-reflect-2 > .hero-word-mask:nth-child(2) .hero-word-wave {
+    animation: heroWordWave 8s ease-in-out infinite, heroWordReflect 8s ease-in-out infinite;
+    animation-delay: 3.82s, 5.68s;
+  }
+  .hero-js .hero-animated.hero-ambient .hero-h1-reflect-2 > .hero-word-mask:nth-child(3) .hero-word-wave {
+    animation: heroWordWave 8s ease-in-out infinite, heroWordReflect 8s ease-in-out infinite;
+    animation-delay: 4.04s, 5.76s;
+  }
+  .hero-js .hero-animated.hero-ambient .hero-h1-reflect-2 > .hero-word-mask:nth-child(4) .hero-word-wave {
+    animation: heroWordWave 8s ease-in-out infinite, heroWordReflect 8s ease-in-out infinite;
+    animation-delay: 4.26s, 5.84s;
+  }
+  .hero-js .hero-animated.hero-ambient .hero-h1-reflect-2 > .hero-word-mask:nth-child(5) .hero-word-wave {
+    animation: heroWordWave 8s ease-in-out infinite, heroWordReflect 8s ease-in-out infinite;
+    animation-delay: 4.48s, 5.92s;
+  }
+
+  .hero-js .hero-animated.hero-ambient .hero-service-item {
+    animation: heroServiceCycle 24s ease-in-out infinite;
+  }
+
+  /* Positive delays (not negative): a negative delay fast-forwards an
+     animation's local clock, which inverts the apparent order here
+     (item 5 would show second, item 1 last) — confirmed by rendering.
+     Positive delays just hold each item at its unstarted state
+     (opacity 0, matching its own base rule) until its slot arrives,
+     giving the intended Managed IT -> ... -> IT Consulting sequence. */
+  .hero-js .hero-animated.hero-ambient .hero-service-item[style*="--i:0"] { animation-delay: 0s; }
+  .hero-js .hero-animated.hero-ambient .hero-service-item[style*="--i:1"] { animation-delay: 4s; }
+  .hero-js .hero-animated.hero-ambient .hero-service-item[style*="--i:2"] { animation-delay: 8s; }
+  .hero-js .hero-animated.hero-ambient .hero-service-item[style*="--i:3"] { animation-delay: 12s; }
+  .hero-js .hero-animated.hero-ambient .hero-service-item[style*="--i:4"] { animation-delay: 16s; }
+  .hero-js .hero-animated.hero-ambient .hero-service-item[style*="--i:5"] { animation-delay: 20s; }
+
+  /* !important: animations above are (re)assigned via the `animation`
+     shorthand with equal selector specificity to the pause rule below,
+     so without !important the shorthand would win on source order and
+     silently reset play-state back to "running" whenever .hero-ambient
+     and .hero-paused are both present — exactly what happens when the
+     hero scrolls offscreen after settling into the ambient loop. */
+  .hero-js .hero-animated.hero-paused .hero-service-item,
+  .hero-js .hero-animated.hero-paused .hero-h1-reflect-1,
+  .hero-js .hero-animated.hero-paused .hero-h1-reflect-2,
+  .hero-js .hero-animated.hero-paused .hero-word-wave {
+    animation-play-state: paused !important;
+  }
+
+  /* One word's wave pulse: rest, lift ~8px with a slight perspective
+     tilt, settle back — occupying roughly the first 13% (1.04s) of the
+     shared 8s timeline. Each word's animation-delay (above) slides
+     this same short pulse to a different moment, so three/five
+     separately-delayed copies read as one wave rolling through the
+     phrase word by word. */
+  @keyframes heroWordWave {
+    0%, 100% { transform: perspective(420px) translateY(0) rotateX(0deg); }
+    6% { transform: perspective(420px) translateY(-8px) rotateX(-6deg); }
+    13% { transform: perspective(420px) translateY(0) rotateX(0deg); }
+  }
+
+  /* One word's reflect sweep: resting (0% position, solid navy),
+     transit to the swept position (0-5%, i.e. 0-0.4s), then hold the
+     swept position (visually identical solid navy — see
+     .hero-word-wave's gradient stops) for the rest of the 8s cycle.
+     animation-delay (above) places this short transit at the moment
+     each word's turn comes; the jump back to 0% at the next loop is
+     invisible because both ends of the gradient read the same. */
+  @keyframes heroWordReflect {
+    0% { background-position: 0% 0%; }
+    5% { background-position: 100% 0%; }
+    100% { background-position: 100% 0%; }
+  }
+
+  /* Each item gets one 1/6 slice (16.67%) of the shared 24s cycle via
+     its negative animation-delay. The active window fills nearly the
+     whole slice (arrive 0-3%, hold to 14%, leave to 16.6667%) so one
+     label is always reading as the next arrives — no blank interval. */
+  /* Masked vertical slide with perspective: each item rises up out of
+     a backward tilt into position (matching the incoming half of the
+     brief), holds, then continues the same upward motion into a
+     forward tilt as it exits (the outgoing half) — a consistent
+     conveyor direction, clipped by .hero-service-stage's own
+     overflow:hidden "mask". */
+  @keyframes heroServiceCycle {
+    0% { opacity: 0; transform: perspective(500px) translateY(22px) rotateX(-42deg); }
+    3% { opacity: 1; transform: perspective(500px) translateY(0) rotateX(0deg); }
+    14% { opacity: 1; transform: perspective(500px) translateY(0) rotateX(0deg); }
+    16.6667% { opacity: 0; transform: perspective(500px) translateY(-20px) rotateX(42deg); }
+    100% { opacity: 0; }
+  }
+}
+
+/* ----------------------------------------------------------------
+   Mobile: same single-column experience. object-position is shifted
+   off-centre so the cropped video still shows a glass tower cluster
+   instead of just the empty sky/floor at dead centre.
+   ---------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .hero-video {
+    object-position: 38% 50%;
+  }
+
+  .hero-animated .hero-stack {
+    max-width: 92vw;
+    gap: 6px;
+  }
+
+  .hero-logo-stage {
+    gap: 4px;
+  }
+
+  .hero-logo-ring-wrap {
+    width: clamp(92px, 24vw, 128px);
+  }
+
+  .hero-logo-word {
+    font-size: clamp(22px, 6.2vw, 30px);
+  }
+
+  .hero-service-stage {
+    height: clamp(28px, 8vw, 36px);
+  }
+
+  .hero-service-text {
+    font-size: 1.125rem;
+  }
+}
