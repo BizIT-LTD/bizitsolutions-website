@@ -94,7 +94,11 @@ const htmlFiles = walk(ROOT);
 const fileSet = new Set(htmlFiles.map((file) => path.relative(ROOT, file).replace(/\\/g, "/")));
 const sitemapPath = path.join(ROOT, "sitemap.xml");
 const sitemap = fs.existsSync(sitemapPath) ? fs.readFileSync(sitemapPath, "utf8") : "";
-const sitemapUrls = new Set([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1].trim()));
+const sitemapUrls = new Set([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => {
+  const url = m[1].trim();
+  // Apache adds a trailing slash for directory pages; compare those URLs consistently.
+  return url !== `${SITE}/` && url.endsWith("/") ? url.slice(0, -1) : url;
+}));
 const failures = [];
 const warnings = [];
 const titles = new Map();
