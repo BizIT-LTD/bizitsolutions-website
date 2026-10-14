@@ -46,3 +46,8 @@ BizIT Solutions provides managed IT services, business IT support, Microsoft 365
 - [Microsoft 365 Security Checklist for Small Business](https://bizitsolutions.com.au/blog/microsoft-365-security-checklist-small-business) — Practical checklist covering Microsoft 365 identity, email, sharing, devices and recovery.
 - [Essential Eight for Small Business](https://bizitsolutions.com.au/blog/essential-eight-for-small-business) — Plain-language guide to the Essential Eight strategies and maturity model.
 - [What to Do When Your IT Person Leaves](https://bizitsolutions.com.au/blog/what-to-do-when-your-it-person-leaves) — Business continuity checklist for protecting access, systems and supplier relationships.
+
+## Careers
+
+- [Careers at BizIT Solutions](https://bizitsolutions.com.au/careers/) — Current opportunities to work with BizIT Solutions.
+- [Independent Business Development Partner](https://bizitsolutions.com.au/careers/independent-business-development-partner/) — Six-month independent contractor opportunity with possible renewal; flexible and remote with an agreed territory, commission-based with no fixed salary, superannuation or employee benefits.

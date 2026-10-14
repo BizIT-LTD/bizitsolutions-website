@@ -227,7 +227,7 @@ for (const file of htmlFiles) {
     }
   }
 
-  if (!sitemapUrls.has(cleanUrl)) failures.push(`${label}: clean URL is missing from sitemap.xml`);
+  if (!sitemapUrls.has(cleanUrl) && !sitemapUrls.has(`${cleanUrl}/`)) failures.push(`${label}: clean URL is missing from sitemap.xml`);
 
   for (const match of html.matchAll(/<a\s+[^>]*href=["']([^"']+)["'][^>]*>/gi)) {
     const target = internalPath(match[1], file);
