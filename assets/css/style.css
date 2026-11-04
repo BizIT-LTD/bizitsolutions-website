@@ -1944,3 +1944,9 @@ h3 {
     right: 0;
   }
 }
+
+.footer-legal {
+  display: inline-block;
+  margin-left: 6px;
+  white-space: nowrap;
+}
