@@ -641,9 +641,24 @@ textarea:focus {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
   gap: 38px;
   padding: 52px 0 34px;
+}
+
+.footer-contact span {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.footer-contact a[href^="mailto:"] {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1100px) and (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .footer-brand {
@@ -1928,4 +1943,10 @@ h3 {
   .media-frame::after {
     right: 0;
   }
+}
+
+.footer-legal {
+  display: inline-block;
+  margin-left: 6px;
+  white-space: nowrap;
 }

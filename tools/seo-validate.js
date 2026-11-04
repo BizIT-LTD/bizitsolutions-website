@@ -9,7 +9,6 @@ const SKIP_DIRS = new Set([".git", ".agents", "node_modules"]);
 const REQUIRED_FAVICON = "/assets/images/bizitFavicon400x400.png";
 const GA4_ID = "G-L9T1EK1FFP";
 const SERVICE_PAGES = new Set([
-  "it-company-sydney.html",
   "managed-it-services-sydney.html",
   "it-support-sydney.html",
   "small-business-it-support-sydney.html",
@@ -22,13 +21,6 @@ const SERVICE_PAGES = new Set([
   "website-design-small-business-sydney.html",
   "seo-google-ads-sydney.html",
   "it-support-north-shore-sydney.html",
-  "it-services-sydney.html",
-  "managed-service-provider-sydney.html",
-  "outsourced-it-support-sydney.html",
-  "remote-it-support-sydney.html",
-  "onsite-it-support-sydney.html",
-  "it-helpdesk-sydney.html",
-  "business-email-support-sydney.html",
   "network-support-sydney.html",
   "backup-disaster-recovery-sydney.html",
   "endpoint-management-sydney.html",
