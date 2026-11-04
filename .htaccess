@@ -19,6 +19,17 @@ RewriteRule ^it-security(?:\.html)?/?$ /services#security-operations-center [R=3
 RewriteRule ^web-design-services(?:\.html)?/?$ /services#it-consultancy [R=301,L,NE]
 RewriteRule ^seo-google-ads(?:\.html)?/?$ /services#it-consultancy [R=301,L,NE]
 
+# November 2026 consolidation: overlapping Sydney service pages merged into
+# stronger pages so they stop competing with each other in search.
+RewriteRule ^managed-service-provider-sydney(?:\.html)?/?$ /managed-it-services-sydney [R=301,L,NE]
+RewriteRule ^it-company-sydney(?:\.html)?/?$ /managed-it-services-sydney [R=301,L,NE]
+RewriteRule ^it-services-sydney(?:\.html)?/?$ /managed-it-services-sydney [R=301,L,NE]
+RewriteRule ^outsourced-it-support-sydney(?:\.html)?/?$ /managed-it-services-sydney [R=301,L,NE]
+RewriteRule ^remote-it-support-sydney(?:\.html)?/?$ /it-support-sydney#remote-support [R=301,L,NE]
+RewriteRule ^it-helpdesk-sydney(?:\.html)?/?$ /it-support-sydney#helpdesk [R=301,L,NE]
+RewriteRule ^onsite-it-support-sydney(?:\.html)?/?$ /it-support-sydney#onsite-support [R=301,L,NE]
+RewriteRule ^business-email-support-sydney(?:\.html)?/?$ /microsoft-365-support-sydney#business-email [R=301,L,NE]
+
 # Serve extensionless clean URLs from matching .html files.
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
